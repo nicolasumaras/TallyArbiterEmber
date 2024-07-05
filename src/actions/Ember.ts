@@ -5,11 +5,13 @@ import { Action } from "./_Action";
 import { EmberClientEvent } from "node-emberplus";
 
 
-@RegisterAction("48c73ee4", "Ember+", [
+@RegisterAction("48c73ee4", "Ember+M", [
   { fieldName: "ip", fieldLabel: "IP Address", fieldType: "text" },
   { fieldName: "port", fieldLabel: "Port", fieldType: "port" },
   { fieldName: "path", fieldLabel: "Ember Path", fieldType: "text" },
-  { fieldName: "value", fieldLabel: "Value", fieldType: "bool" },
+  { fieldName: "value", fieldLabel: "True/False", fieldType: "bool" },
+  { fieldName: "index", fieldLabel: "Posição", fieldType: "number" },
+
 ])
 export class Ember extends Action {
   // to prevent the lag of connecting to Ember+, we will store a dictionary of all Ember+ connections
@@ -95,11 +97,18 @@ export class Ember extends Action {
         } else {
           emberValue = this.action.data.value;
         }
-
-        await this.getConnection().setValueAsync(
-            node,
-            emberValue
-        );
+        if (this.action.data.value === true) {
+          logger(`Tally ON ${this.action.data.value}`);
+          await this.getConnection().matrixConnectAsync(
+              node, this.action.data.index, 
+              [0]
+          );
+        } else {
+          logger(`Tally OFF ${this.action.data.value}`);
+          await this.getConnection().matrixDisconnectAsync(
+              node, this.action.data.index, 
+          );
+        }
     } catch (error) {
         logger(`Ember+ error, giving up sending: ${error}`, "error");
     }
