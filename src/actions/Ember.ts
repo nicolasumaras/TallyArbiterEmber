@@ -9,7 +9,7 @@ import { EmberClientEvent } from "node-emberplus";
   { fieldName: "ip", fieldLabel: "IP Address", fieldType: "text" },
   { fieldName: "port", fieldLabel: "Port", fieldType: "port" },
   { fieldName: "path", fieldLabel: "Ember Path", fieldType: "text" },
-  { fieldName: "value", fieldLabel: "True/False", fieldType: "bool" },
+  { fieldName: "value", fieldLabel: "Tally ON/Tally OFF", fieldType: "bool" },
   { fieldName: "index", fieldLabel: "Posição", fieldType: "number" },
 
 ])
